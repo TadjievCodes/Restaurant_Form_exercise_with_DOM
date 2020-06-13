@@ -1,0 +1,327 @@
+<!-- 
+	Name: 
+	Date: February 2020
+	Purpose: Form Practice
+-->
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Midterm Practice</title>
+    <h1 style="color: black; padding: 5px;">IWD Restaurant</h1>
+</head>
+
+<body onload="displayOptionPrices();" style="background-color: #adfff1; border: 2px solid black; padding: 5px;">
+    <div style="background-color: #ffbfbf; border: 2px solid black; padding: 5px;">
+        <!-- Movie Selections -->
+
+        <table>
+            <tr>
+                <td>
+                    <!-- Option Selection 1 -->
+                    <div style="background-color: white; border: 2px solid #3a302a; padding: 5px;" onmouseover="this.style.backgroundColor = '#fdff91';" onmouseout="this.style.backgroundColor = 'white';">
+                        <h3 id="hOption1">Option 1 - Soup</h3>
+                        <image src="image1.png" width="250" height="250" style="display: block; margin-left: auto; margin-right: auto;" />
+                        <br/>
+                        <p id="buttons">Qty: <input readonly type="text" size="3" value="0" id="option1Quantity" class="btn" /> </p>
+                        <input type="button" value="Add to Order" onclick="buttonClick1();" />
+
+                    </div>
+                </td>
+                <td>
+                    <!-- Option Selection 2 -->
+                    <div style="background-color: white; border: 2px solid #3a302a; padding: 5px;" onmouseover="this.style.backgroundColor = '#fdff91';" onmouseout="this.style.backgroundColor = 'white';">
+                        <h3 id="hOption2">Option 2 - Pizza</h3>
+                        <image src="image2.png" width="250" height="250" style="display: block; margin-left: auto; margin-right: auto;" />
+                        <br/>
+                        <p>Qty: <input readonly type="text" size="3" value="0" id="option2Quantity" /> </p>
+                        <input type="button" value="Add to Order" onclick="buttonClick2()" />
+
+                    </div>
+                </td>
+                <td>
+                    <!-- Option Selection 3 -->
+                    <div style="background-color: white; border: 2px solid #3a302a; padding: 5px;" onmouseover="this.style.backgroundColor = '#fdff91';" onmouseout="this.style.backgroundColor = 'white';">
+                        <h3 id="hOption3">Option 3 - Burger</h3>
+                        <image src="image3.png" width="250" height="250" style="display: block; margin-left: auto; margin-right: auto;" />
+                        <br/>
+                        <p>Qty: <input readonly type="text" size="3" value="0" id="option3Quantity" /> </p>
+                        <input type="button" value="Add to Order" onclick="buttonClick3()" />
+
+                    </div>
+                </td>
+                <td>
+                    <!-- Option Selection 4 -->
+                    <div style="background-color: white; border: 2px solid #3a302a; padding: 5px;" onmouseover="this.style.backgroundColor = '#fdff91';" onmouseout="this.style.backgroundColor = 'white';">
+                        <h3 id="hOption4">Option 4 - Salad</h3>
+                        <image src="image4.png" width="250" height="250" style="display: block; margin-left: auto; margin-right: auto;" />
+                        <br/>
+                        <p>Qty: <input readonly type="text" size="3" value="0" id="option4Quantity" /> </p>
+                        <input type="button" value="Add to Order" onclick="buttonClick4()" />
+
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <!-- Buttons -->
+        <input type="button" value="Confirm Order" style="padding: 10px;" onclick="calculating()" />
+        <input type="button" value="Reset Order" style="padding: 10px;" id="reset" onclick=" myResetFunction()" />
+
+    </div>
+
+
+    <!-- Output Area -->
+    <p style="color: black; font-size: 20px; font-weight: bold; padding: 5px;">
+        Order History:
+    </p>
+    <div id="itemsList"></div>
+    <!-- new space -->
+
+    <div style="color: black; font-weight: bold; padding: 5px;" id="theOutputArea">
+
+    </div>
+
+    <!-- Javascript -->
+    <script>
+        //.textContent changes the text of the text in html super handy for manipulation...
+        // Your code here...  
+        //displayOptionPrices();
+        var mealOption1 = 9.99;
+        var mealOption2 = 15.99;
+        var mealOption3 = 17.99;
+        var mealOption4 = 12.99;
+
+        //Variables to store the items to purchase let's say
+        var meal1 = "Soup Option 1";
+        var meal2 = "Pizza Option 2";
+        var meal3 = "Burger Meal Option 3";
+        var meal4 = "Salad Option 4";
+
+
+        function displayOptionPrices() {
+            var option1 = document.getElementById("hOption1").textContent = "Soup Option 1 costs " + mealOption1 + " $";
+            var option2 = document.getElementById("hOption2").textContent = "Pizza Option 2 costs " + mealOption2 + " $";
+            var option3 = document.getElementById("hOption3").textContent = "Burger Meal Option 3 costs " + mealOption3 + " $";
+            var option4 = document.getElementById("hOption4").textContent = "Salad Option 4 costs " + mealOption4 + " $";
+        }
+
+
+
+        // Quantity of the meal and all the counting variables
+        var mealQuantity = 0;
+        var totalOrders = 0;
+        var orderingNumber = 0;
+        const HST_TAX = 0.13;
+        var taxCalculation = 0;
+        var totalAmount = 0;
+
+        var order = " ";
+
+        /*
+        // Add order buttons to link with onclick events on DOM
+        function orderValidation1() {
+
+            mealQuantity++;
+            var x = document.getElementById("option1Quantity").value = "1";
+            //document.getElementById("option1Quantity").innerHTML = x;
+            return x;
+        }
+
+        function orderValidation2() {
+
+            mealQuantity++;
+            var x = document.getElementById("option2Quantity").value = "1";
+            //document.getElementById("option1Quantity").innerHTML = x;
+            return x;
+        }
+
+
+        function orderValidation3() {
+
+            mealQuantity++;
+            var x = document.getElementById("option3Quantity").value = "1";
+            //document.getElementById("option1Quantity").innerHTML = x;
+            return x;
+        }
+
+
+
+        function orderValidation4() {
+
+            mealQuantity++;
+            var x = document.getElementById("option4Quantity").value = "1";
+            //document.getElementById("option1Quantity").innerHTML = x;
+            return x;
+        }
+
+        */
+
+        /* function resetButton() {
+            var y = document.querySelectorAll("input").value = "0";
+
+        }
+*/
+        /*  Reset doesnt work
+        var a = 0;
+
+        function resetButton() {
+            // a = 0;
+            var x = document.getElementById("buttons").querySelectorAll('.btn').value = 0;
+            x[0].value = 0;
+        }
+*/
+
+
+        var i = 0;
+
+        function buttonClick1() {
+            document.getElementById('option1Quantity').value = ++i;
+            mealQuantity++;
+            totalOrders = totalOrders + mealOption1;
+            document.getElementById("itemsList").innerHTML += meal1 + " $ " + mealOption1 + "<br>";
+        }
+
+        var a = 0;
+
+        function buttonClick2() {
+            document.getElementById('option2Quantity').value = ++a;
+            mealQuantity++;
+            totalOrders = totalOrders + mealOption2;
+            document.getElementById("itemsList").innerHTML += meal2 + " $ " + mealOption2 + "<br>";
+        }
+
+
+        var b = 0;
+
+        function buttonClick3() {
+            document.getElementById('option3Quantity').value = ++b;
+            mealQuantity++;
+            totalOrders = totalOrders + mealOption3;
+            document.getElementById("itemsList").innerHTML += meal3 + " $ " + mealOption3 + "<br>";
+        }
+
+
+
+
+        var c = 0;
+
+        function buttonClick4() {
+            document.getElementById('option4Quantity').value = ++c;
+            mealQuantity++;
+            totalOrders = totalOrders + mealOption4;
+            document.getElementById("itemsList").innerHTML += meal4 + " $ " + mealOption4 + "<br>";
+        }
+
+
+        /// reset button onclick event so it resets the quantity of the  items added to Order
+
+        function myResetFunction() {
+            document.querySelectorAll("input")[0]
+                .value = 0;
+            document.querySelectorAll("input")[2]
+                .value = 0;
+            document.querySelectorAll("input")[4]
+                .value = 0;
+            document.querySelectorAll("input")[6]
+                .value = 0;
+            a = b = c = i = totalOrders = mealQuantity = 0; // clear all the variables
+            calculating(0); // then recalculate and display 0
+            document.getElementById("itemsList").innerHTML = "";
+            //Code line 230 removes the description of meals on the output display Area
+        }
+
+
+
+
+
+
+
+        /*
+                mealQuantity++;
+                documemt.getElementById("option2Quantity").value = "2";
+            } else if (mealOption3 == mealOption3) {
+                mealQuantity++;
+                documemt.getElementById("option3Quantity").value = "3";
+            }
+        }
+
+*/
+
+
+
+        /* if (mealOption1 === mealOption1) {
+                mealQuantity += 1;
+                totalOrders = totalOrders + mealOption1;
+                orderingNumber++;
+            } else if (mealOption2 === mealOption2) {
+                mealQuantity += 1;
+                totalOrders = totalOrders + mealOption2;
+                orderingNumber++;
+            } else if (mealOption3 === mealOption3) {
+                mealQuantity += 1;
+                totalOrders = totalOrders + mealOption3;
+                orderingNumber++;
+
+            } else if (mealOption4 === mealOption4) {
+                mealQuantity += 1;
+                totalOrders = totalOrders + mealOption4;
+                orderingNumber++;
+            }
+        }
+              */
+
+
+
+
+
+
+
+
+        //mealQuantity++;
+        //var mealQuantity1 = document.getElementById("option1Quantity").innerHTML = "mealOption1";
+
+        // var order1 = document.getElementById("")
+
+        function calculating() {
+
+
+            var taxCalculation = totalOrders * HST_TAX;
+            taxCalculation = Math.round(taxCalculation);
+
+
+
+            //calculate the TotalAmount through adding tax and subTotal amount and rounding the number in the end
+            var totalAmount = totalOrders + taxCalculation;
+            totalAmount = Math.round(totalAmount);
+
+
+            // var OutputAmount = Math.trunc(totalAmount);
+
+
+
+
+            var displayMessage2 = ("Tax: " + taxCalculation + "$" + "<br>" + "Total Bill: " + totalAmount + "$" + "<br>" + " After selecting all the desired meals...");
+            document.getElementById("theOutputArea").innerHTML = displayMessage2;
+
+        }
+
+
+        /*
+                //Reseet function
+                var reset = function() {
+                    a = 0;
+                    document.getElementById('Value').innerHTML = 0;
+
+                }
+
+                function reset() {
+                    a = 0;
+                    updateValue();
+                };
+
+                */
+    </script>
+</body>
+
+</html>

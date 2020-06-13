@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<style>
+    .valid {
+        border: 2px solid green;
+        background-color: 2px solid aquamarine;
+    }
+    
+    .invalid {
+        border: 2px solid red;
+        background-color: 2px solid peachpuff;
+    }
+</style>
+
+<body>
+    Enter Number: <input type="text" onchange="validate(this);" />
+    <script>
+        // When our code has errors, it "throws" exceptions that inform us (via the console) that something went wrong.
+        // Sometimes these exceptions cause unexpected problems in our code, interfering with the flow of our program.
+
+        // To counter this, we can write code to "catch" these exceptions using a "try catch block"
+        // When we catch an exception, we can analyse what went wrong and handle accordingly
+
+        // Read Chapters 87 and 88
+
+        // examples 
+        example();
+        example2();
+
+        //myTry(100);
+        myTry(-100);
+        //myTry(1100);
+
+        // Remove Try catch code and see the difference in our web pages behaviour when it encounrters these exceptions
+
+        function example() {
+            var greeting = "Hello World";
+            try {
+                window.alert(greet); // error, this variable doesnt exist
+                alert("We got here!");
+            } catch (err) {
+                alert("An error happened!");
+            }
+            alert("Done!");
+        }
+
+        function example2() {
+            var num = 4;
+
+            try {
+                num.toUpperCase(); // error, toUpperCase can only be used on Strings
+            } catch (err) {
+                alert(err);
+            }
+
+            alert("ex2 Done");
+
+        }
+
+        // Take in a number and validate it
+        function myTry(userInput) {
+            // We can throw our own exceptions, essentially adding some conditions in our code where something has "gone wrong"
+            // Example: Maybe we dont want to allow negative numbers in our calculations, we can wrap our code in a try catch, and whenever we encounter something we dont like, throw an exception
+            try {
+                if (userInput < -1) {
+                    throw "Negative Number Detected!";
+                }
+
+                if (userInput > 1000) {
+                    throw "Number Exceeds 1000!";
+                }
+
+                // Do something with your valid data 
+                // ex: deposit, withdrawal etc
+
+
+            } catch (err) {
+                // Do something 
+                alert(err);
+            }
+            alert("Done!");
+
+        }
+
+        function validate(formElement) {
+            try {
+                if (formElement.value == null) // throw the element doesnt exist
+                {
+                    throw "invalid";
+                }
+
+                if (formElement.value < -1) // throw the number is negative
+                {
+                    throw "invalid";
+                }
+
+                if (formElement.value > 1000) // throw the number exceeds our max value
+                {
+                    throw "invalid";
+                }
+
+                /*if (isNan(formElement.value) == true) // throw not a number 
+                {
+                    throw "Not a number";
+                }*/
+
+                formElement.className = "valid";
+
+            } catch (err) {
+                formElement.className = err; // set the styling for the element to whatever was thrown
+                //alert(err);
+            }
+        }
+    </script>
+</body>
+
+</html>
